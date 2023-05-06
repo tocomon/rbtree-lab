@@ -1,16 +1,24 @@
 #include "rbtree.h"
 
-#include <stdlib.h>
+#include <stdlib.h> // malloc, calloc, free
 
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-  // TODO: initialize struct if needed
   return p;
 }
 
+void delete_node(node_t *now_node, node_t *nil_node){
+  if (now_node != nil_node) { // NULL이 아닌 경우
+    delete_node(now_node->left, nil_node); // 왼쪽 서브트리 순회
+    delete_node(now_node->right, nil_node); // 오른쪽 서브트리 순회
+    free(now_node); // 노드 메모리 해제
+  }
+}
+
 void delete_rbtree(rbtree *t) {
-  // TODO: reclaim the tree nodes's memory
-  free(t);
+  delete_node(t->root, t->nil) // 노드 순회 및 메모리 해제
+  free(t->nil) // sentinel 메모리 해제
+  free(t); // rbtree 구조체 메모리 해제
 }
 
 node_t *rbtree_insert(rbtree *t, const key_t key) {
