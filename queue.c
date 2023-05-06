@@ -79,7 +79,9 @@ int Dequeue(Queue *queue)
     }
     now = queue->front;//맨 앞의 노드를 now에 기억
     re = now->data;//반환할 값은 now의 data로 설정
-    queue->front = now->next;//맨 앞은 now의 다음 노드로 설정
+    // queue->front = now->next;//맨 앞은 now의 다음 노드로 설정
+    Node *next = now->next;//윗 줄과 같은 기능, 보기 쉬운 방법
+    queue->front = next;
     free(now);//now 소멸
     queue->count--;//보관 개수를 1 감소
     return re;
