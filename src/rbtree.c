@@ -2,8 +2,34 @@
 
 #include <stdlib.h> // malloc, calloc, free
 
+/** Node colour black */
+#define	BLACK	0
+/** Node colour red */
+#define	RED	1
+
+node_t nil ={
+  BLACK,
+  NULL,
+  NULL,
+  NULL,
+  NULL
+};
+
+static void rbtree_rotate_left(rbtree *rbtree, node_t *node);
+static void rbtree_rotate_right(rbtree *rbtree, node_t *node);
+static void rbtree_insert_fixup(rbtree *rbtree, node_t *node);
+static void rbtree_delete_fixup(rbtree *rbtree, node_t *child, node_t *child_parent);
+
+
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
+  if (!p) {
+    return NULL;
+  }
+  
+  p->root = NULL;
+  p->nil = &nil;
+
   return p;
 }
 
@@ -16,8 +42,8 @@ void delete_node(node_t *now_node, node_t *nil_node){
 }
 
 void delete_rbtree(rbtree *t) {
-  delete_node(t->root, t->nil) // 노드 순회 및 메모리 해제
-  free(t->nil) // sentinel 메모리 해제
+  delete_node(t->root, t->nil); // 노드 순회 및 메모리 해제
+  free(t->nil); // sentinel 메모리 해제
   free(t); // rbtree 구조체 메모리 해제
 }
 

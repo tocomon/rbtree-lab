@@ -20,15 +20,13 @@ typedef struct {
   node_t *nil;  // for sentinel, 모든 leaf 노드는 sentinel 노드를 가리킴, sentinel 노드 = NULL
 } rbtree;
 
-rbtree *new_rbtree(void);
-void delete_rbtree(rbtree *);
-
-node_t *rbtree_insert(rbtree *, const key_t);
-node_t *rbtree_find(const rbtree *, const key_t);
-node_t *rbtree_min(const rbtree *);
-node_t *rbtree_max(const rbtree *);
-int rbtree_erase(rbtree *, node_t *);
-
-int rbtree_to_array(const rbtree *, key_t *, const size_t);
+rbtree *new_rbtree(void); // 동적 메모리 할당
+void delete_rbtree(rbtree *); // 메모리 삭제
+node_t *rbtree_insert(rbtree *, const key_t); // 노드 삽입
+node_t *rbtree_find(const rbtree *, const key_t); // 해당 키 노드 주소, 없을 경우 NULL
+node_t *rbtree_min(const rbtree *); // 최소값 노드 주소
+node_t *rbtree_max(const rbtree *); // 최대값 노드 주소
+int rbtree_erase(rbtree *, node_t *); // 노드 삭제
+int rbtree_to_array(const rbtree *, key_t *, const size_t); // 노드 키 순서대로 배열
 
 #endif  // _RBTREE_H_ 중복 방지
